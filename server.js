@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 });
 
 var SOCKET_LIST = {};
-var TIEMPO_PREGUNTAS = 8000;
+var TIEMPO_PREGUNTAS = 15000;
 var TIEMPO_RESTANTE = TIEMPO_PREGUNTAS;
 var PREGUNTA_ACTUAL = null;
 var ACTUAL_RANK = [];
