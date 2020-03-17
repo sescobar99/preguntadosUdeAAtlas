@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Preguntados UdeA</title>
+
+</head>
+
+<body>
+    <h1>Preguntados UdeA</h1>
+
+
+    <div id="signDiv">
+        Username: <input id="signDiv-username" type="text"></input><br>
+        Password: <input id="signDiv-password" type="password"></input>
+        <button id="signDiv-signIn">Sign In</button>
+        <button id="signDiv-signUp">Sign Up</button>
+    </div>
+
+
+    <div id="gameDiv" style="display:none;">
+        <div class="pregunta">
+            <p id="enunciado">Enunciado </p>
+        </div>
+
+        <ul>
+            <li><button id="opcion1" onclick="functionA()">Opcion1</button></li>
+            <li><button id="opcion2" onclick="functionB()">Opcion2</button></li>
+            <li><button id="opcion3" onclick="functionC()">Opcion3</button></li>
+            <li><button id="opcion4" onclick="functionD()">Opcion4</button></li>
+        </ul>
+
+        <progress id="timeLeft" value="100" max="100"> </progress>
+
+
+        <div id="foo">
+            <table>
+
+
+            </table>
+
+        </div>
+
+
+
+
+    </div>
+
+</body>
+
+
+
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script>
+    var table = document.createElement('table');
+    var tableBody = document.createElement('tbody');
+    document.getElementById("foo").appendChild(tableBody);
+    var socket = io();
+
+    ///Log in
+    var signDiv = document.getElementById('signDiv');
+    var signDivUsername = document.getElementById('signDiv-username');
+    var signDivSignIn = document.getElementById('signDiv-signIn');
+    var signDivSignUp = document.getElementById('signDiv-signUp');
+    var signDivPassword = document.getElementById('signDiv-password');
+
+    signDivSignIn.onclick = function () {
+        socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
+    }
+    signDivSignUp.onclick = function () {
+        socket.emit('signUp', { username: signDivUsername.value, password: signDivPassword.value });
+    }
+    socket.on('signInResponse', function (data) {
+        if (data.success) {
+            signDiv.style.display = 'none';
+            gameDiv.style.display = 'inline-block';
+
+            var table = document.createElement('table');
+
+            var tableBody = document.createElement('tbody');
+            document.getElementById("foo").appendChild(tableBody);
+        } else
+            alert("Sign in unsuccessul.");
+    });
+    socket.on('signUpResponse', function (data) {
+        if (data.success) {
+            alert("Sign up successul.");
+        } else
+            alert("Sign up unsuccessul.");
+    });
+
+
+
+    ///Respuestas
+
+    socket.on('pregunta', function (data) {
+        //alert(data);
+        document.getElementById("enunciado").innerHTML = data.enunciado;
+        document.getElementById("opcion1").innerHTML = data.a;
+        document.getElementById("opcion2").innerHTML = data.b;
+        document.getElementById("opcion3").innerHTML = data.c;
+        document.getElementById("opcion4").innerHTML = data.d;
+        enableB();
+    });
+
+
+    function enableB() {
+        document.getElementById("opcion1").disabled = false;
+        document.getElementById("opcion2").disabled = false;
+        document.getElementById("opcion3").disabled = false;
+        document.getElementById("opcion4").disabled = false;
+    }
+
+    function disebleB() {
+        document.getElementById("opcion1").disabled = true;
+        document.getElementById("opcion2").disabled = true;
+        document.getElementById("opcion3").disabled = true;
+        document.getElementById("opcion4").disabled = true;
+    }
+
+
+    function functionA() {
+        socket.emit('answer', { choice: 'a' });;
+        disebleB();
+    }
+    function functionB() {
+        socket.emit('answer', { choice: 'b' });
+        disebleB();
+    }
+    function functionC() {
+        socket.emit('answer', { choice: 'c' });
+        disebleB();
+    }
+    function functionD() {
+        socket.emit('answer', { choice: 'd' });
+        disebleB();
+    }
+
+    socket.on('feedback', function (data) {
+        if (data.correcto) {
+            alert("Correcto");
+        } else
+            alert("Incorrecto");
+    });
+
+    socket.on('barraTiempo', function (data) {
+        document.getElementById("timeLeft").value = data.time;
+    });
+
+
+    socket.on('rank', function (data) {
+        // Add the contents of options[0] to #foo:
+        createTable(data.rank);
+    });
+
+
+
+    function createTable(tableData) {
+        var table = document.createElement('table');
+
+        var tableBody = document.createElement('tbody');
+
+        var row = document.createElement('tr');
+
+        row.appendChild(document.createElement('td').appendChild(document.createTextNode("Usuario")));
+
+        row.appendChild(document.createElement('td').appendChild(document.createTextNode("Puntaje")));
+
+        tableBody.appendChild(row);
+
+        tableData.forEach(function (rowData) {
+            var row = document.createElement('tr');
+
+            row.appendChild(document.createElement('td').appendChild(document.createTextNode(rowData.username)));
+
+            row.appendChild(document.createElement('td').appendChild(document.createTextNode(rowData.score)));
+
+            tableBody.appendChild(row);
+        });
+        document.getElementById("foo").appendChild(tableBody);
+        // appendChild(tableBody);
+    }
+</script>
