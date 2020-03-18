@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Preguntados UdeA</title>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <style>
         th,
         td,
@@ -34,24 +41,32 @@
     <div id="signDiv">
         Username: <input id="signDiv-username" type="text"></input><br>
         Password: <input id="signDiv-password" type="password"></input>
-        <button id="signDiv-signIn">Sign In</button>
-        <button id="signDiv-signUp">Sign Up</button>
+
+        <button class="waves-effect waves-light btn" id="signDiv-signIn">Sign In</button>
+        <button class="waves-effect waves-light btn" id="signDiv-signUp">Sign Up</button>
     </div>
 
 
     <div id="gameDiv" style="display:none;">
+
+        
         <div class="pregunta">
             <p id="enunciado">Enunciado </p>
         </div>
 
         <ul>
-            <li><button id="opcion1" onclick="functionA()">Opcion1</button></li>
-            <li><button id="opcion2" onclick="functionB()">Opcion2</button></li>
-            <li><button id="opcion3" onclick="functionC()">Opcion3</button></li>
-            <li><button id="opcion4" onclick="functionD()">Opcion4</button></li>
+            <li><button class="waves-effect waves-light btn-large" id="opcion1" onclick="functionA()">Opcion1</button>
+            </li>
+            <li><button class="waves-effect waves-light btn-large" id="opcion2" onclick="functionB()">Opcion2</button>
+            </li>
+            <li><button class="waves-effect waves-light btn-large" id="opcion3" onclick="functionC()">Opcion3</button>
+            </li>
+            <li><button class="waves-effect waves-light btn-large" id="opcion4" onclick="functionD()">Opcion4</button>
+            </li>
         </ul>
 
-        <progress id="timeLeft" value="100" max="100"> </progress>
+        
+        <progress id="timeLeft" value="100" max="100" > </progress>
 
 
         <p id="showData"></p>
@@ -178,9 +193,9 @@
 </script>
 
 <script>
-    function CreateTableFromJSON(JSON) {       
+    function CreateTableFromJSON(JSON) {
         // EXTRACT VALUE FOR HTML HEADER. 
-        
+
         var col = [];
         for (var i = 0; i < JSON.length; i++) {
             for (var key in JSON[i]) {
