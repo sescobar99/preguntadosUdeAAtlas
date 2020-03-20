@@ -11,10 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "materialize-css": "^1.0.0-rc.2",
     "mongodb": "^3.5.5",
     "socket.io": "^2.3.0"
   },
   "engines": {
-    "node" : "12.16.x"
-  }  
+    "node": "12.16.x"
+  }
 }

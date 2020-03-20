@@ -34,16 +34,37 @@
     </style>
 </head>
 
+
 <body>
-    <h1>Preguntados UdeA</h1>
+    <h1 class="center-align">Preguntados UdeA</h1>
 
 
     <div id="signDiv">
-        Username: <input id="signDiv-username" type="text"></input><br>
-        Password: <input id="signDiv-password" type="password"></input>
 
-        <button class="waves-effect waves-light btn" id="signDiv-signIn">Sign In</button>
-        <button class="waves-effect waves-light btn" id="signDiv-signUp">Sign Up</button>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">                        
+                        <input id="signDiv-username" type="text" id="autocomplete-input" class="autocomplete"><br>
+                        <label for="autocomplete-input">USERNAME</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="input-field col s12">                        
+                        <input id="signDiv-password" type="text" id="autocomplete-input" class="autocomplete"><br>
+                        <label for="autocomplete-input">PASSWORD</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="waves-effect waves-light btn-large" id="signDiv-signIn">Sign In</button>
+        <button class="waves-effect waves-light btn-large" id="signDiv-signUp">Sign Up</button>
     </div>
 
 
@@ -55,34 +76,28 @@
         </div>
 
         <ul>
-            <li><button class="waves-effect waves-light btn-large" id="opcion1" onclick="functionA()">Opcion1</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion1" onclick="functionA()">Opcion1</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large" id="opcion2" onclick="functionB()">Opcion2</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion2" onclick="functionB()">Opcion2</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large" id="opcion3" onclick="functionC()">Opcion3</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion3" onclick="functionC()">Opcion3</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large" id="opcion4" onclick="functionD()">Opcion4</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion4" onclick="functionD()">Opcion4</button>
             </li>
         </ul>
+      
+        <div class="progress">
+            <div  id="timeLeft" class="determinate" style="width: 100%"></div>
+        </div>   
 
-        
-        <progress id="timeLeft" value="100" max="100" > </progress>
-
-
-        <p id="showData"></p>
-
-
-
-        <!-- <div id="foo">
-            <table>
-
-
-            </table>
-
-        </div> -->
     </div>
+    
+    <table>
+        <div class="row">
+            <div class="light-green accent-3"  class="col s12"><p id="showData"></div>      
+        </div>
+    </table>
 </body>
-
 
 
 
@@ -110,11 +125,6 @@
         if (data.success) {
             signDiv.style.display = 'none';
             gameDiv.style.display = 'inline-block';
-
-            var table = document.createElement('table');
-
-            var tableBody = document.createElement('tbody');
-            document.getElementById("foo").appendChild(tableBody);
         } else
             alert("Sign in unsuccessul.");
     });
@@ -180,14 +190,12 @@
     });
 
     socket.on('barraTiempo', function (data) {
-        document.getElementById("timeLeft").value = data.time;
+        document.getElementById("timeLeft").style=`width: ${data.time}%`;        
     });
 
 
-    socket.on('rank', function (data) {
-        // Add the contents of options[0] to #foo:
+    socket.on('rank', function (data) {        
         CreateTableFromJSON(data.rank)
-        //createTable(data.rank);
     });
 
 </script>
