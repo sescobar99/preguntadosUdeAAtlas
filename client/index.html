@@ -31,6 +31,28 @@
         th {
             font-weight: bold;
         }
+
+
+        ul {
+            display: flex;
+            flex-direction: column;
+        }
+
+        ul li:first-child {
+            order: 5;
+        }
+
+        ul li:nth-child(2) {
+            order: 4;
+        }
+
+        ul li:nth-child(3) {
+            order: 3;
+        }
+
+        ul li:nth-child(4) {
+            order: 2;
+        }
     </style>
 </head>
 
@@ -44,7 +66,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="row">
-                    <div class="input-field col s12">                        
+                    <div class="input-field col s12">
                         <input id="signDiv-username" type="text" id="autocomplete-input" class="autocomplete"><br>
                         <label for="autocomplete-input">USERNAME</label>
                     </div>
@@ -55,7 +77,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="row">
-                    <div class="input-field col s12">                        
+                    <div class="input-field col s12">
                         <input id="signDiv-password" type="text" id="autocomplete-input" class="autocomplete"><br>
                         <label for="autocomplete-input">PASSWORD</label>
                     </div>
@@ -70,31 +92,37 @@
 
     <div id="gameDiv" style="display:none;">
 
-        
+
         <div class="pregunta">
             <p id="enunciado">Enunciado </p>
         </div>
 
         <ul>
-            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion1" onclick="functionA()">Opcion1</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion1"
+                    onclick="functionA()">Opcion1</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion2" onclick="functionB()">Opcion2</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion2"
+                    onclick="functionB()">Opcion2</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion3" onclick="functionC()">Opcion3</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion3"
+                    onclick="functionC()">Opcion3</button>
             </li>
-            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion4" onclick="functionD()">Opcion4</button>
+            <li><button class="waves-effect waves-light btn-large green darken-1" id="opcion4"
+                    onclick="functionD()">Opcion4</button>
             </li>
         </ul>
-      
+
         <div class="progress">
-            <div  id="timeLeft" class="determinate" style="width: 100%"></div>
-        </div>   
+            <div id="timeLeft" class="determinate" style="width: 100%"></div>
+        </div>
 
     </div>
-    
+
     <table>
         <div class="row">
-            <div class="light-green accent-3"  class="col s12"><p id="showData"></div>      
+            <div class="light-green accent-3" class="col s12">
+                <p id="showData">
+            </div>
         </div>
     </table>
 </body>
@@ -190,11 +218,11 @@
     });
 
     socket.on('barraTiempo', function (data) {
-        document.getElementById("timeLeft").style=`width: ${data.time}%`;        
+        document.getElementById("timeLeft").style = `width: ${data.time}%`;
     });
 
 
-    socket.on('rank', function (data) {        
+    socket.on('rank', function (data) {
         CreateTableFromJSON(data.rank)
     });
 
