@@ -1,0 +1,9 @@
+Proyecto "Preguntados UdeA"
+
+Desarollado en nodejs. Dependencias : socket.io, express, mongodb.
+
+Uso de Atlas (cloudDB)
+
+Front-end: HTML, materialize
+
+Desplegado en heroku https://serene-mountain-60379.herokuapp.com/
